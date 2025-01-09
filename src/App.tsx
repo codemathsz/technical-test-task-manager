@@ -12,12 +12,9 @@ export interface ITask{
 }
 
 function App() {
-  const [tasks, setTasks] = useState<ITask[]>([{id: "1", description:"description test", title: "Teste", status: "pendente"},
-    {id: "1", description:"description test", title: "Teste", status: "pendente"},
-    {id: "1", description:"description test", title: "Teste", status: "pendente"},
-    {id: "1", description:"description test", title: "Teste", status: "pendente"}]);
+  const [tasks, setTasks] = useState<ITask[]>([]);
   const [newTitle, setNewTitle] = useState('');
-  const [newDescripton, setNewDescripton] = useState('');
+  const [newDescription, setNewDescription] = useState('');
 
   const [isOpenModal, setIsOpenModal] = useState(false);
 
@@ -27,12 +24,30 @@ function App() {
     setTasks(result.data)
   }
 
-  function handleSubmit(event: FormEvent){
+  async function handleSubmit(event: FormEvent) {
     event.preventDefault();
-    console.log(newTitle);
-    console.log(newDescripton);
-    closeModal();
-    getAllTasks();
+    const data = {
+      title: newTitle,
+      description: newDescription,
+      status: 'pendente'
+    };
+    try {
+      const result = await API.post('/tasks', data);
+      console.log(result);
+      console.log(newTitle);
+      console.log(newDescription);
+      closeModal();
+      clearData();
+    } catch (error) {
+      console.error('Error creating task:', error);
+    }
+    getAllTasks()
+  }
+  
+
+  const clearData = () => {
+    setNewTitle('')
+    setNewDescription('')
   }
 
   const openModal = () => setIsOpenModal(true);
@@ -68,8 +83,8 @@ function App() {
                   className='w-full bg-[#1a1a1a] text-gray-100 border border-gray-950 p-4 outline-none rounded'
                   type='text' 
                   placeholder='Escreva uma breve descrição'
-                  value={newDescripton}
-                  onChange={(event) =>setNewDescripton(event.target.value)}
+                  value={newDescription}
+                  onChange={(event) =>setNewDescription(event.target.value)}
                 />
               </div>
               <button className='mt-4' type='submit'>Criar</button>
