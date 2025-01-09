@@ -49,8 +49,8 @@ export function List({ tasks }:ListProps){
                         <p>{item.status}</p>
                       </li>
                       <li className="w-full list-none p-4 rounded-lg cursor-pointer flex flex-row gap-4 font-bold ">
-                        <p>X</p>
-                        <p>I</p>
+                        <p className="cursor-pointer" title="Editar" >I</p>
+                        <p className="cursor-pointer" title="Excluir" >X</p>
                       </li>
                     </div>
                   );
