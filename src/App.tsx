@@ -1,7 +1,8 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { Header } from './components/Header'
 import { List } from './components/List';
 import { NewTaskModal } from './components/NewTaskModal';
+import { API } from './libs/axios';
 
 export interface ITask{
   id: string
@@ -19,15 +20,27 @@ function App() {
   const [newDescripton, setNewDescripton] = useState('');
 
   const [isOpenModal, setIsOpenModal] = useState(false);
+
+  async function getAllTasks() {
+    const result = await API.get('/tasks')
+
+    setTasks(result.data)
+  }
+
   function handleSubmit(event: FormEvent){
     event.preventDefault();
     console.log(newTitle);
     console.log(newDescripton);
     closeModal();
+    getAllTasks();
   }
 
   const openModal = () => setIsOpenModal(true);
   const closeModal = () => setIsOpenModal(false);
+
+  useEffect(() =>{
+    getAllTasks();
+  }, [])
   return (
     <div>
       <Header />
