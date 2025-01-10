@@ -22,7 +22,11 @@ export function Form({task, closeModal, getAllTasks}: FormProps){
       status: status ?? 'pendente'
     };
     try {
-      await API.post('/tasks', data);
+      if(task){
+        await API.put(`/tasks/${task.id}`, data);
+      }else{
+        await API.post('/tasks', data);
+      }
       closeModal();
       clearData();
       getAllTasks()
@@ -40,6 +44,7 @@ export function Form({task, closeModal, getAllTasks}: FormProps){
     if (task) { 
       setNewTitle(task.title); 
       setNewDescription(task.description); 
+      setStatus(task.status)
     }
   }, [task]);
   return (
