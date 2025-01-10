@@ -54,14 +54,14 @@ export function List({ tasks, getAllTask }:ListProps){
           ):(
               tasks.map((item, index) =>{
                   return (
-                    <div key={index} className="w-full flex flex-row gap-4 bg-[#1a1a1a] rounded">
+                    <div key={index} className="w-full flex items-center flex-row gap-4 bg-[#1a1a1a] rounded">
                       <li className="w-full list-none p-4 rounded-lg cursor-pointer  font-bold ">
                         <p>{index+1}</p>
                       </li>
                       <li className="w-full list-none p-4 rounded-lg cursor-pointer  font-bold ">
                         <p>{item.title}</p>
                       </li>
-                      <li className="w-full list-none p-4 rounded-lg cursor-pointer  font-bold ">
+                      <li className="w-full list-none p-4 rounded-lg cursor-pointer  font-bold">
                         <p>{item.description}</p>
                       </li>
                       <li className="w-full list-none p-4 rounded-lg cursor-pointer  font-bold ">
