@@ -20,7 +20,6 @@ function App() {
 
   async function getAllTasks() {
     const result = await API.get('/tasks')
-
     setTasks(result.data)
   }
 
@@ -32,16 +31,13 @@ function App() {
       status: 'pendente'
     };
     try {
-      const result = await API.post('/tasks', data);
-      console.log(result);
-      console.log(newTitle);
-      console.log(newDescription);
+      await API.post('/tasks', data);
       closeModal();
       clearData();
+      getAllTasks()
     } catch (error) {
       console.error('Error creating task:', error);
     }
-    getAllTasks()
   }
   
 
@@ -93,7 +89,7 @@ function App() {
         </NewTaskModal>
         <button type='button' onClick={openModal}>Criar nova Tarefa</button>
 
-        <List tasks={tasks}/>
+        <List tasks={tasks} getAllTask={getAllTasks}/>
       </div>
     </div>
   )

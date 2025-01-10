@@ -1,11 +1,20 @@
 import { ITask } from "../../App";
+import { MdDelete } from "react-icons/md";
+import { FaEdit } from "react-icons/fa";
+import { API } from "../../libs/axios";
 
 type ListProps = {
   tasks: ITask[]
+  getAllTask: VoidFunction
 }
 
-export function List({ tasks }:ListProps){
+export function List({ tasks, getAllTask }:ListProps){
   
+  async function deleteTask(id: string) {
+    await API.delete(`/tasks/${id}`)
+    getAllTask()
+  }
+
   return (
     <ul className="w-[60rem] flex justify-between items-center gap-4">
       <div className="w-full flex flex-col border-t border-t-gray-950 rounded-lg pt-4 gap-4">
@@ -49,8 +58,8 @@ export function List({ tasks }:ListProps){
                         <p>{item.status}</p>
                       </li>
                       <li className="w-full list-none p-4 rounded-lg cursor-pointer flex flex-row gap-4 font-bold ">
-                        <p className="cursor-pointer" title="Editar" >I</p>
-                        <p className="cursor-pointer" title="Excluir" >X</p>
+                        <p className="cursor-pointer" title="Editar" ><FaEdit/></p>
+                        <p className="cursor-pointer" title="Excluir" onClick={() => deleteTask(item.id)}><MdDelete/></p>
                       </li>
                     </div>
                   );
