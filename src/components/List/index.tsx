@@ -2,6 +2,9 @@ import { ITask } from "../../App";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { API } from "../../libs/axios";
+import { NewTaskModal } from "../NewTaskModal";
+import { Form } from "../Form";
+import { useState } from "react";
 
 type ListProps = {
   tasks: ITask[]
@@ -9,7 +12,14 @@ type ListProps = {
 }
 
 export function List({ tasks, getAllTask }:ListProps){
-  
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [task, setTask] = useState<ITask>()
+  const openModal = (task: ITask) => {
+    setTask(task)
+    setIsOpenModal(true)
+  };
+  const closeModal = () => setIsOpenModal(false);
+
   async function deleteTask(id: string) {
     await API.delete(`/tasks/${id}`)
     getAllTask()
@@ -58,15 +68,19 @@ export function List({ tasks, getAllTask }:ListProps){
                         <p>{item.status}</p>
                       </li>
                       <li className="w-full list-none p-4 rounded-lg cursor-pointer flex flex-row gap-4 font-bold ">
-                        <p className="cursor-pointer" title="Editar" ><FaEdit/></p>
+                        <p className="cursor-pointer" title="Editar" onClick={() => openModal(item)}><FaEdit/></p>
                         <p className="cursor-pointer" title="Excluir" onClick={() => deleteTask(item.id)}><MdDelete/></p>
                       </li>
                     </div>
+                    
                   );
               })
           )
         }
       </div>
+      <NewTaskModal isOpen={isOpenModal}>
+        <Form closeModal={closeModal} getAllTasks={getAllTask} task={task} />
+      </NewTaskModal>
     </ul>
   )
 }

@@ -14,8 +14,6 @@ export interface ITask{
 
 function App() {
   const [tasks, setTasks] = useState<ITask[]>([]);
-
-
   const [isOpenModal, setIsOpenModal] = useState(false);
 
   async function getAllTasks() {
