@@ -41,7 +41,7 @@ export function List({ tasks, getAllTask }:ListProps){
         <li className="w-full list-none p-4 rounded-lg cursor-pointer  font-bold ">
           <p>Status</p>
         </li>
-        <li className="w-full list-none p-4 rounded-lg cursor-pointer  font-bold ">
+        <li className="w-full list-none p-4 rounded-lg cursor-pointer flex justify-center  font-bold ">
           <p>Ações</p>
         </li>
       </div>
@@ -67,12 +67,11 @@ export function List({ tasks, getAllTask }:ListProps){
                       <li className="w-full list-none p-4 rounded-lg cursor-pointer  font-bold ">
                         <p>{item.status}</p>
                       </li>
-                      <li className="w-full list-none p-4 rounded-lg cursor-pointer flex flex-row gap-4 font-bold ">
+                      <li className="w-full list-none p-4 rounded-lg cursor-pointer flex flex-row justify-center gap-4 font-bold ">
                         <p className="cursor-pointer" title="Editar" onClick={() => openModal(item)}><FaEdit/></p>
                         <p className="cursor-pointer" title="Excluir" onClick={() => deleteTask(item.id)}><MdDelete/></p>
                       </li>
-                    </div>
-                    
+                    </div>                
                   );
               })
           )
